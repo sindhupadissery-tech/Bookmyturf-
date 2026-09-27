@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BookMyTurf</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#f5f7f6;color:#13201b}
+header{background:#0b2418;color:white;padding:22px 7%;display:flex;justify-content:space-between;align-items:center}
+.logo{font-size:25px;font-weight:800}.logo span{color:#63e68a}
+.hero{background:#123b27;color:white;padding:55px 7% 65px}
+.hero h1{font-size:42px;margin:0 0 12px}.hero p{font-size:18px;opacity:.9}
+.search{margin-top:28px;background:white;padding:10px;border-radius:14px;display:flex;gap:10px;max-width:850px}
+.search input,.search select{flex:1;padding:15px;border:1px solid #ddd;border-radius:9px;font-size:15px}
+.search button,.book{border:0;border-radius:9px;background:#20b957;color:white;font-weight:700;padding:14px 22px;cursor:pointer}
+section{padding:35px 7%}.title{display:flex;justify-content:space-between;align-items:center}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:22px}
+.card{background:white;border-radius:16px;overflow:hidden;box-shadow:0 4px 18px #00000012}
+.photo{height:175px;background:linear-gradient(135deg,#26734d,#78c893);display:flex;align-items:center;justify-content:center;color:white;font-size:46px}
+.info{padding:18px}.info h3{margin:0 0 8px}.meta{color:#637169;font-size:14px;margin-bottom:12px}.price{font-weight:800;font-size:18px;margin-bottom:15px}
+.modal{display:none;position:fixed;inset:0;background:#0008;align-items:center;justify-content:center;padding:20px}
+.modal-box{background:white;width:min(500px,100%);border-radius:18px;padding:25px}
+.modal-box h2{margin-top:0}.slots{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:15px 0}
+.slot{padding:12px;border:1px solid #ddd;border-radius:8px;background:#fff;cursor:pointer}.slot.selected{background:#20b957;color:white;border-color:#20b957}
+.field{width:100%;padding:13px;margin:7px 0 12px;border:1px solid #ddd;border-radius:8px}
+.close{float:right;border:0;background:none;font-size:25px;cursor:pointer}
+@media(max-width:650px){.hero h1{font-size:32px}.search{flex-direction:column}}
+</style>
+</head>
+<body>
+<header><div class="logo">BookMy<span>Turf</span> ⚽</div><div>Find • Book • Play</div></header>
+
+<div class="hero">
+<h1>Find & Book Your Turf</h1>
+<p>Football, cricket and more — discover sports venues near you.</p>
+<div class="search">
+<input id="location" placeholder="📍 Enter location">
+<select><option>Football</option><option>Cricket</option><option>Badminton</option></select>
+<button onclick="document.getElementById('turfs').scrollIntoView()">Search</button>
+</div>
+</div>
+
+<section id="turfs">
+<div class="title"><h2>Popular Turfs</h2><span>Phase 1 Demo</span></div>
+<div class="grid">
+<div class="card">
+<div class="photo">⚽</div>
+<div class="info"><h3>Mambaram Football Arena</h3><div class="meta">📍 Mambaram &nbsp; ⭐ 4.7</div><div class="price">₹800 / hour</div><button class="book" onclick="openBooking('Mambaram Football Arena',800)">BOOK NOW</button></div>
+</div>
+<div class="card">
+<div class="photo">🏟️</div>
+<div class="info"><h3>Thalassery Sports Arena</h3><div class="meta">📍 Thalassery &nbsp; ⭐ 4.5</div><div class="price">₹700 / hour</div><button class="book" onclick="openBooking('Thalassery Sports Arena',700)">BOOK NOW</button></div>
+</div>
+</div>
+</section>
+
+<div class="modal" id="modal">
+<div class="modal-box">
+<button class="close" onclick="closeBooking()">×</button>
+<h2 id="modalTitle">Book Turf</h2>
+<label>Date</label><input class="field" type="date" id="date">
+<label>Available slots</label>
+<div class="slots">
+<button class="slot" onclick="selectSlot(this)">5:00–6:00 PM</button>
+<button class="slot" onclick="selectSlot(this)">6:00–7:00 PM</button>
+<button class="slot" onclick="selectSlot(this)">7:00–8:00 PM</button>
+<button class="slot" onclick="selectSlot(this)">8:00–9:00 PM</button>
+</div>
+<input class="field" id="name" placeholder="Your name">
+<input class="field" id="phone" placeholder="Phone number">
+<button class="book" style="width:100%" onclick="confirmBooking()">CONFIRM BOOKING</button>
+</div></div>
+
+<script>
+let selectedSlot="";
+function openBooking(name,price){document.getElementById('modalTitle').innerText="Book "+name+" — ₹"+price+"/hour";document.getElementById('modal').style.display="flex"}
+function closeBooking(){document.getElementById('modal').style.display="none"}
+function selectSlot(el){document.querySelectorAll('.slot').forEach(x=>x.classList.remove('selected'));el.classList.add('selected');selectedSlot=el.innerText}
+function confirmBooking(){
+ if(!document.getElementById('date').value||!selectedSlot||!document.getElementById('name').value||!document.getElementById('phone').value){alert("Please select date, time and enter your details.");return}
+ alert("Booking request received! This is the BookMyTurf Phase 1 demo.");
+}
+</script>
+</body>
+</html>
